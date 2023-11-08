@@ -79,6 +79,8 @@ const code_exec = function (commands, max_steps) {
 
         cmd = commands[t];
 
+        if (!(cmd[1] in r)) { r[cmd[1]] = 0; }
+
         if (cmd[0] == 0) {
             r[cmd[1]] += 1;
 
@@ -106,6 +108,8 @@ const code_exec = function (commands, max_steps) {
         } else if (cmd[0] == 3) {
             t = cmd[1];
         } else if (cmd[0] == 4) {
+            if (!(cmd[2] in r)) { r[cmd[2]] = 0; }
+
             r[cmd[1]] = r[cmd[2]];
 
             if (cmd[1] in reg) {
