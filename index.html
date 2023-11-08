@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniMachine</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="r-line" class="line">
+        <div class="R"><p>R0</p><span r="0" class="input" role="textbox" contenteditable>0</span></div>
+        <div class="R"><p>R1</p><span r="1" class="input" role="textbox" contenteditable>0</span></div>
+        <div class="R"><p>R2</p><span r="2" class="input" role="textbox" contenteditable>0</span></div>
+        <div class="R"><p>R3</p><span r="3" class="input" role="textbox" contenteditable>0</span></div>
+        <div class="t">...</div>
+    </div>
+
+    <div class="btns">
+        <div id="run-btn" class="run-btn">Run</div>
+        <div class="r-list">Доп. регистры: <input id="r-list" type="text" value="R3, R4, R10, R11"></div>
+    </div>
+
+    <div class="container">
+        <div class="col col-code">
+            <div id="code">
+                <div id="numbers" class="numbers"><p>0:</p><p>1:</p><p>2:</p><p>3:</p></div>
+                <div class="editor">
+                    <pre id="text" class="text"></pre>
+                    <textarea id="textarea" class="textarea" contenteditable="true" wrap="off"></textarea>
+                </div>
+            </div>
+        </div>
+        <div id="log">
+
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+R0 := R1
+if R2 = 0 goto 5
+inc R0
+dec R2
+goto 1
+R1 := 0

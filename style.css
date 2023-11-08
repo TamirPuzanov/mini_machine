@@ -1,0 +1,177 @@
+* {
+    font-family: monospace;
+}
+
+body {
+    zoom: 1.8;
+}
+
+#code {
+    display: flex;
+    margin-top: 10px;
+}
+
+.line {
+    display: flex;
+}
+
+.line > .R {
+    padding-bottom: 20px;
+}
+
+.line > .t {
+    height: 20px;
+    margin-top: 22px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #808080;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.line > .R > .input {
+    width: 30px;
+    height: 30px;
+    border: 1px solid silver;
+    border-right: 0px;
+    text-align: center;
+    padding: 8px 13px;
+    position: relative;
+    top: 10px;
+}
+
+.line > .R > p {
+    margin: 0px;
+}
+
+#editor {
+    position: relative;
+    margin: 10px;
+}
+
+.text, .textarea {
+    position: absolute;
+    resize: none;
+}
+
+.textarea {
+    background-color: transparent;
+    min-width: 150px; min-height: 200px;
+    border: none; color: transparent;
+    caret-color: #adadad;
+    font-size: 12px;
+}
+
+.text {
+    margin: 0px;
+    color: #282923;
+    padding-top: 2px;
+    padding-left: 2px;
+    font-size: 12px;
+}
+
+.operator {
+    color: green;
+}
+
+.key_word {
+    color: blue;
+}
+
+.digit {
+    color: purple;
+}
+
+.reg {
+    color: orange;
+}
+
+.textarea:focus {
+    outline: none !important;
+    border: none;
+}
+
+.numbers {
+    /* display: flex; */
+    margin-top: 2px;
+    margin-right: 4px;
+}
+
+.numbers > p {
+    margin: 0px;
+    padding: 0px;
+    font-size: 12px;
+    text-align: right;
+    min-width: 20px;
+}
+
+.col-code {
+    width: 250px;
+    min-height: 200px;
+    max-height: 300px;
+    overflow: auto;
+    position: relative;
+}
+
+.btns {
+    display: flex;
+    margin-top: 7px;
+}
+
+.btns > .r-list {
+    font-size: 10px;
+    margin-left: 10px;
+}
+
+.btns > .r-list > input {
+    width: 100px;
+    height: 10px;
+    font-size: 9px;
+}
+
+.btns > .run-btn {
+    background: #04a504;
+    width: 34px;
+    color: #ffffff;
+    border-radius: 1px;
+    text-align: center;
+    font-size: 11px;
+    padding: 2px 0px;
+
+    -ms-user-select: none; 
+    -moz-user-select: none; 
+    -webkit-user-select: none; 
+    user-select: none;
+
+    cursor: pointer;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* html {
+    --scrollbarBG: #CFD8DC;
+    --thumbBG: #90A4AE;
+}
+
+.col-code::-webkit-scrollbar {
+    width: 8px;
+}
+
+.col-code {
+    scrollbar-width: thin;
+    scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+
+.col-code::-webkit-scrollbar-track {
+    background: var(--scrollbarBG);
+}
+
+.col-code::-webkit-scrollbar-thumb {
+    background-color: var(--thumbBG) ;
+    border-radius: 4px;
+    border: 2px solid var(--scrollbarBG);
+} */
