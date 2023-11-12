@@ -8,6 +8,8 @@ const run_btn = document.getElementById('run-btn');
 const r_list = document.getElementById('r-list');
 const r_line = document.getElementById('r-line');
 
+const log = document.getElementById('log-out');
+
 var n_count = 1;
 
 
@@ -75,7 +77,7 @@ const code_exec = function (commands, max_steps) {
 
 
     for (let i = 0; i < max_steps; i++) {
-        if (t >= h) { break; }
+        if (t >= h) { return; }
 
         cmd = commands[t];
 
@@ -132,6 +134,9 @@ const code_exec = function (commands, max_steps) {
             return;
         }
     }
+
+    log.innerText = "Программа выполнила более " + max_steps + " шагов";
+    log.style.display = "block";
 }
 
 const getReg = function () {
@@ -214,6 +219,9 @@ textarea.addEventListener("input", () => {
 });
 
 run_btn.addEventListener("click", () => {
+    log.innerText = "";
+    log.style.display = "none";
+
     let prog = textarea.value.split(/\n/);
     let commands = [], command = "", c=[];
 
@@ -238,11 +246,16 @@ run_btn.addEventListener("click", () => {
         } else if (langRule[6].filter.test(command)) {
             commands.push([6]);
         } else {
-            console.log("Wrong input! Line - " + i)
+            console.log("Wrong input! Line - " + i);
+
+            log.innerText = "Команда в строке " + i + " не распознана";
+            log.style.display = "block";
+
+            return;
         }
     }
 
-    code_exec(commands, 10_000);
+    code_exec(commands, 5_000_000);
 });
 
 r_list.addEventListener("input", () => {
