@@ -27,6 +27,14 @@ class Tape {
     public sum(register: number, value: number) : void {
         this.set(register, this.get(register) + value);
     }
+
+    public clone() : Tape {
+        return new Tape(new Map(this.registers))
+    }
+
+    public get values() : Map<number, number> {
+        return new Map(this.registers)
+    }
 }
 
 

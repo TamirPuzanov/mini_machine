@@ -23,6 +23,12 @@ class Tape {
     sum(register, value) {
         this.set(register, this.get(register) + value);
     }
+    clone() {
+        return new Tape(new Map(this.registers));
+    }
+    get values() {
+        return new Map(this.registers);
+    }
 }
 exports.Tape = Tape;
 //# sourceMappingURL=Tape.js.map

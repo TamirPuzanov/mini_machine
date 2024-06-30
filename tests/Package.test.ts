@@ -27,7 +27,7 @@ test("(Package) checking the validity of packages", () => {
 
 test("(Package) checking the processing of defined commands", () => {
 
-    const Fn = (tape: Tape, args: number[]) => 0;
+    const Fn = ($tape: Tape) => 0;
 
     let progM = new Program("R0 := A()");
     let progA = new Program("inc R0");

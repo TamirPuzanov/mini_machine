@@ -31,4 +31,11 @@ test("(Tape) checking the correctness of the processing of register values", () 
             [0, 0], [0, Infinity]
         ]));
     }).toThrow(RangeError);
+
+    
+    let tapeB = tapeA.clone();
+
+    tapeB.set(0, 0);
+
+    expect([tapeA.get(0), tapeB.get(0)]).toEqual([100, 0]);
 })
