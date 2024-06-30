@@ -1,3 +1,4 @@
+import type { DefinedCommands } from "./DefinedCommands";
 import type { Program } from "./Program";
 declare class ConnectednessError extends Error {
     constructor(stack: string[]);
@@ -10,8 +11,8 @@ declare class OverflowError extends Error {
 }
 declare class Package {
     programs: Map<string, Program>;
-    defined_commands: Set<string>;
-    constructor(programs: Map<string, Program>, defined_commands?: Set<string>);
+    defined_commands: DefinedCommands;
+    constructor(programs: Map<string, Program>, defined_commands?: DefinedCommands);
     private check;
 }
 export { Package };

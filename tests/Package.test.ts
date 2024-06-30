@@ -1,6 +1,8 @@
 import { Program } from "../src/Program";
 import { Package, InferiorityError, ConnectednessError, OverflowError } from "../src/Package";
 
+import { Tape } from "../src/Tape";
+
 
 test("(Package) checking the validity of packages", () => {
 
@@ -25,6 +27,8 @@ test("(Package) checking the validity of packages", () => {
 
 test("(Package) checking the processing of defined commands", () => {
 
+    const Fn = (tape: Tape, args: number[]) => 0;
+
     let progM = new Program("R0 := A()");
     let progA = new Program("inc R0");
 
@@ -36,7 +40,7 @@ test("(Package) checking the processing of defined commands", () => {
         ["Main", progM],
     ]);
 
-    expect(() => new Package(progs1, new Set([ "A" ]))).toThrow(OverflowError);
-    expect(() => new Package(progs2, new Set([ "B" ]))).toThrow(InferiorityError);
-    expect(() => new Package(progs2, new Set([ "A" ]))).not.toThrow();
+    expect(() => new Package(progs1, new Map([ ["A", Fn ] ]))).toThrow(OverflowError);
+    expect(() => new Package(progs2, new Map([ ["B", Fn ] ]))).toThrow(InferiorityError);
+    expect(() => new Package(progs2, new Map([ ["A", Fn ] ]))).not.toThrow();
 })
