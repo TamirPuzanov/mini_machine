@@ -1,6 +1,6 @@
 {
   "name": "@tpuzanov/mini_machine",
-  "version": "0.0.3",
+  "version": "0.1.2",
   "description": "",
   "main": "dist/index.js",
   "author": "t.puzanov@internet.ru",
