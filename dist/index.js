@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CommandType = exports.OverflowError = exports.InferiorityError = exports.ConnectednessError = exports.Package = exports.Tape = exports.Program = exports.ParseError = exports.Parser = void 0;
+exports.CommandType = exports.OverflowError = exports.InferiorityError = exports.ConnectednessError = exports.Package = exports.Tape = exports.Program = exports.ParseError = exports.Parser = exports.HaltError = exports.Interpreter = void 0;
 const Parser_1 = __importStar(require("./Parser"));
 exports.Parser = Parser_1.default;
 Object.defineProperty(exports, "ParseError", { enumerable: true, get: function () { return Parser_1.ParseError; } });
@@ -36,6 +36,9 @@ Object.defineProperty(exports, "InferiorityError", { enumerable: true, get: func
 Object.defineProperty(exports, "OverflowError", { enumerable: true, get: function () { return Package_1.OverflowError; } });
 const Command_1 = require("./Command");
 Object.defineProperty(exports, "CommandType", { enumerable: true, get: function () { return Command_1.CommandType; } });
+const Interpreter_1 = require("./Interpreter");
+Object.defineProperty(exports, "Interpreter", { enumerable: true, get: function () { return Interpreter_1.Interpreter; } });
+Object.defineProperty(exports, "HaltError", { enumerable: true, get: function () { return Interpreter_1.HaltError; } });
 const Tape_1 = require("./Tape");
 Object.defineProperty(exports, "Tape", { enumerable: true, get: function () { return Tape_1.Tape; } });
 //# sourceMappingURL=index.js.map
