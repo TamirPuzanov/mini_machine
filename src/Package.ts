@@ -1,4 +1,3 @@
-import type { DefinedCommands } from "./DefinedCommands";
 import type { Program } from "./Program";
 
 
@@ -28,12 +27,12 @@ class Package {
 
     public programs: Map<string, Program>;
 
-    public defined_commands: DefinedCommands;
+    public defined_commands: Set<string>;
 
 
-    constructor(programs: Map<string, Program>, defined_commands?: DefinedCommands) {
+    constructor(programs: Map<string, Program>, defined_commands?: Set<string>) {
         this.programs = programs;
-        this.defined_commands = defined_commands ? defined_commands : new Map();
+        this.defined_commands = defined_commands ? defined_commands : new Set();
 
         this.check([], "Main");
     }

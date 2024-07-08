@@ -1,40 +1,20 @@
-class Tape {
+import { Value } from "./Value";
 
-    protected registers: Map<number, number>;
 
-    constructor(registers?: Map<number, number>) {
+abstract class Tape <V extends Value> {
+
+    protected registers: Map<number, V>;
+
+    constructor(registers?: Map<number, V>) {
         this.registers = registers ? registers : new Map();
-
-        for (let value of this.registers.values()) {
-            if (!isFinite(value) || isNaN(value)) {
-                throw new RangeError("the value argument must be defined and finite!");
-            }
-        }
     }
 
-    public get(register: number): number {
-        let value = this.registers.get(register);
-        return value !== undefined && value > 0 ? value : 0;
-    }
+    abstract get(register: number): V;
+    abstract set(register: number, value: V) : void;
 
-    public set(register: number, value: number) : void {
-        if (!isFinite(value) || isNaN(value)) {
-            throw new RangeError("the value argument must be defined and finite!");
-        }
-        this.registers.set(register, value > 0 ? value : 0);
-    }
+    abstract assign(register: number, value: V) : void;
 
-    public sum(register: number, value: number) : void {
-        this.set(register, this.get(register) + value);
-    }
-
-    public clone() : Tape {
-        return new Tape(new Map(this.registers))
-    }
-
-    public get values() : Map<number, number> {
-        return new Map(this.registers)
-    }
+    abstract clone() : Tape<V>;
 }
 
 

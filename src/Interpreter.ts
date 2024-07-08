@@ -1,10 +1,12 @@
 import { Command, CommandType } from "./Command";
-import type { defined_command_fn } from "./DefinedCommands";
 
 import type { Package } from "./Package";
 import type { Program } from "./Program";
 
+import { Value } from "./Value";
 import { Tape } from "./Tape";
+
+import { Model, Reducer } from "./Model";
 
 
 class HaltError extends Error {
@@ -15,47 +17,36 @@ class HaltError extends Error {
 }
 
 
-interface State {
-    tape: Tape,
+interface State <V extends Value, T extends Tape<V>> {
+    tape: T,
     command: Command | null
 }
-
-type Reducer = (command_register: number, tape: Tape, args: number[]) => number;
 
 
 class Interpreter {
 
-    protected static reducers: Map<CommandType, Reducer> = new Map([
-        [CommandType.Inc , Interpreter.inc_reducer],
-        [CommandType.Dec,  Interpreter.dec_reducer],
-        [CommandType.RsR , Interpreter.rsr_reducer],
-        [CommandType.RsV,  Interpreter.rsv_reducer],
-        [CommandType.Goto, Interpreter.goto_reducer],
-        [CommandType.If,   Interpreter.if_reducer]
-    ]);
+    // protected static reducers: Map<CommandType, Reducer> = 
 
-    public static run(
-        $package: Package, $tape: Tape, program: string = "Main", 
+    public static run <V extends Value, T extends Tape<V>, M extends Model<V, T>> (
+        $model: M, $package: Package, $tape: T, program: string = "Main", 
         save_states: boolean = false, operations_limit: number = 100_000
-    ): State[] {
+    ): State<V, T>[] {
 
-        $tape = $tape.clone();
+        $tape = $tape.clone() as T;
 
-        let states: State[] = [];
+        let states: State<V, T>[] = [];
 
         if (save_states) {
             states.push({
-                tape: $tape.clone(),
+                tape: $tape.clone() as T,
                 command: null
             })
         }
 
-        if ($package.defined_commands.has(program)) {
-
-            let $program = $package.defined_commands.get(program) as defined_command_fn;
+        if ($model.defined_commands.has(program)) {
 
             states.push({
-                tape: new Tape(new Map([ [ 0, $program($tape) ] ])),
+                tape: $model.use_command(program, $tape),
                 command: null
             });
 
@@ -87,13 +78,13 @@ class Interpreter {
 
             if (current_command.type === CommandType.Fn) {
                 
-                let input_tape = new Tape();
+                let input_tape = $model.create_tape();
 
                 for (let i = 1; i < current_command.args.length; i++) {
                     input_tape.set(i, $tape.get(current_command.args[i]));
                 }
 
-                let states = Interpreter.run($package, input_tape, current_command.link as string, false, operations_limit);
+                let states = Interpreter.run($model, $package, input_tape, current_command.link as string, false, operations_limit - operation_count);
 
                 $tape.set(current_command.args[0], states[0].tape.get(0));
 
@@ -101,55 +92,55 @@ class Interpreter {
 
             } else {
 
-                let current_reducer = Interpreter.reducers.get(current_command.type) as Reducer;
+                let current_reducer = $model.reducers.get(current_command.type) as Reducer<V, T>;
 
                 command_register = current_reducer(command_register, $tape, current_command.args);
             }
 
             if (save_states) {
                 states.push({
-                    tape: $tape.clone(),
+                    tape: $tape.clone() as T,
                     command: Object.assign({}, current_command)
                 })
             }
         }
 
         states.push({
-            tape: $tape.clone(),
+            tape: $tape.clone() as T,
             command: null
         })
 
         return states;
     }
 
-    protected static inc_reducer(command_register: number, tape: Tape, args: number[]) : number {
-        tape.sum(args[0], +1);
-        return command_register + 1;
-    }
+    // protected static inc_reducer(command_register: number, tape: Tape, args: number[]) : number {
+    //     tape.sum(args[0], +1);
+    //     return command_register + 1;
+    // }
 
-    protected static dec_reducer(command_register: number, tape: Tape, args: number[]) : number {
-        tape.sum(args[0], -1);
-        return command_register + 1;
-    }
+    // protected static dec_reducer(command_register: number, tape: Tape, args: number[]) : number {
+    //     tape.sum(args[0], -1);
+    //     return command_register + 1;
+    // }
 
-    protected static rsr_reducer(command_register: number, tape: Tape, args: number[]) : number {
-        tape.set(args[0], tape.get(args[1]));
-        return command_register + 1;
-    }
+    // protected static rsr_reducer(command_register: number, tape: Tape, args: number[]) : number {
+    //     tape.set(args[0], tape.get(args[1]));
+    //     return command_register + 1;
+    // }
 
-    protected static rsv_reducer(command_register: number, tape: Tape, args: number[]) : number {
-        tape.set(args[0], args[1]);
-        return command_register + 1;
-    }
+    // protected static rsv_reducer(command_register: number, tape: Tape, args: number[]) : number {
+    //     tape.set(args[0], args[1]);
+    //     return command_register + 1;
+    // }
 
-    protected static goto_reducer(command_register: number, tape: Tape, args: number[]) : number {
-        return args[0];
-    }
+    // protected static goto_reducer(command_register: number, tape: Tape, args: number[]) : number {
+    //     return args[0];
+    // }
 
-    protected static if_reducer(command_register: number, tape: Tape, args: number[]) : number {
-        if (tape.get(args[0]) === 0) return args[1];
-        return command_register + 1;
-    }
+    // protected static if_reducer(command_register: number, tape: Tape, args: number[]) : number {
+    //     if (tape.get(args[0]) === 0) return args[1];
+    //     return command_register + 1;
+    // }
 }
 
 
