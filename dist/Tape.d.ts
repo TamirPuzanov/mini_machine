@@ -1,11 +1,11 @@
-declare class Tape {
-    protected registers: Map<number, number>;
-    constructor(registers?: Map<number, number>);
-    get(register: number): number;
-    set(register: number, value: number): void;
-    sum(register: number, value: number): void;
-    clone(): Tape;
-    get values(): Map<number, number>;
+import { Value } from "./Value";
+declare abstract class Tape<V extends Value> {
+    protected registers: Map<number, V>;
+    constructor(registers?: Map<number, V>);
+    abstract get(register: number): V;
+    abstract set(register: number, value: V): void;
+    abstract assign(register: number, value: V): void;
+    abstract clone(): Tape<V>;
 }
 export { Tape };
 //# sourceMappingURL=Tape.d.ts.map

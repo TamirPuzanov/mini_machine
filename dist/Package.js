@@ -25,7 +25,7 @@ exports.OverflowError = OverflowError;
 class Package {
     constructor(programs, defined_commands) {
         this.programs = programs;
-        this.defined_commands = defined_commands ? defined_commands : new Map();
+        this.defined_commands = defined_commands ? defined_commands : new Set();
         this.check([], "Main");
     }
     check(path, program_name) {
